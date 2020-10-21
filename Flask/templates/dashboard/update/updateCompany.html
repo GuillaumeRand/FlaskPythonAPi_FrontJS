@@ -1,0 +1,44 @@
+{% extends 'dashboard/base.html' %} {% block title %} Update Company {% endblock %} {% block content %}
+<h3>Update Company</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Siret</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in value %}
+        <tr>
+            <th scope="row"> <span id="memId" value={{row[0]}}>{{row[0]}}</span></th>
+            <td><input type="text" id="name" name="name" required value={{row[1]}}>
+            </td>
+            <td><input type="text" id="siret" name="siret" required value={{row[2]}}>
+            </td>
+            <td><button href="#" class="btn btn-primary" onclick="updateCompany()">Validate</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    function updateCompany() {
+        $.ajax({
+            url: "/admin/updateCompany",
+            type: "POST",
+            data: JSON.stringify({
+                id: $("#memId").text(),
+                name: $("#name").val(),
+                siret: $("#siret").val()
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                document.location.href = "/admin/dashCompany"
+            }
+        })
+
+    }
+</script>
+{% endblock %}

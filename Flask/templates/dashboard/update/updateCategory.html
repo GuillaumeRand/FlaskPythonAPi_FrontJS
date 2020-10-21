@@ -1,0 +1,40 @@
+{% extends 'dashboard/base.html' %} {% block title %} Update Category {% endblock %} {% block content %}
+<h3>Update Category</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in value %}
+        <tr>
+            <th scope="row"> <span id="memId" value={{row[0]}}>{{row[0]}}</span></th>
+            <td><input type="text" id="title" name="title" required value={{row[1]}}>
+            </td>
+            <td><button href="#" class="btn btn-primary" onclick="updateCategory()">Validate</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    function updateCategory() {
+        $.ajax({
+            url: "/admin/updateCategory",
+            type: "POST",
+            data: JSON.stringify({
+                id: $("#memId").text(),
+                title: $("#title").val(),
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                document.location.href = "/admin/dashCategory"
+            }
+        })
+
+    }
+</script>
+{% endblock %}

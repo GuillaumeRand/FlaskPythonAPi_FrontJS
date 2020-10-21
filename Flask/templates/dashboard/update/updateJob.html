@@ -1,0 +1,61 @@
+{% extends 'dashboard/base.html' %} {% block title %} Update Job {% endblock %} {% block content %}
+<h3>Update Job</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Content</th>
+            <th scope="col">Company</th>
+            <th scope="col">Category</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in value %}
+        <tr>
+            <th scope="row"> <span id="memId" value={{row[0]}}>{{row[0]}}</span></th>
+            <td>
+                <input type="text" id="title" name="title" required value="{{ row[1] }}">
+            </td>
+            <td><input type="text" id="content" name="content" required value="{{row[3]}}">
+            </td>
+            <td><select id="company" name="company">
+                {% for optionComp in selectComp %}
+                    <option value="{{optionComp[0]}}" {% if row[4]==optionComp[0] %} selected {% endif %}>{{optionComp[1]}}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td><select id="category" name="category">
+                {% for optionCat in selectCat %}
+                    <option value={{optionCat[0]}} {% if row[5]==optionCat[0] %} selected {% endif %}>{{optionCat[1]}}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td><button href="#" class="btn btn-primary" onclick="updateJob() ">Validate</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    function updateJob() {
+        $.ajax({
+            url: "/admin/updateJob",
+            type: "POST",
+            data: JSON.stringify({
+                id: $("#memId").text(),
+                title: $("#title").val(),
+                content: $("#content").val(),
+                company: $("#company").val(),
+                category: $("#category").val(),
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                document.location.href = "/admin"
+            }
+        })
+
+    }
+</script>
+{% endblock %}

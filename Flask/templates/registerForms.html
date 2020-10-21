@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block title %} Index {% endblock %} {% block content %}
+<h1 style="display: flex; justify-content:center;  margin:30px;">Sign In</h1>
+<div class="container">
+    <form method="POST" action="/signIn/">
+        <div class="form-group">
+            <label for="inputName">Name</label>
+            <input type="text" class="form-control" name="inputName" id="inputName" aria-describedby="nameHelp"
+                placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <label for="inputLastName">Lastname</label>
+            <input type="text" class="form-control" name="inputLastName" id="inputLastName"
+                aria-describedby="lastnameHelp" placeholder="Enter lastname">
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+            </div>
+            <label for="inputEmail"></label>
+            <input type="email" class="form-control rounded-right" name="inputEmail" id="inputEmail"
+                aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="inputAge">Age</label>
+            <input type="int" class="form-control" name="inputAge" id="inputAge" aria-describedby="ageHelp"
+                placeholder="Enter age">
+        </div>
+        <div class="form-group">
+            <label for="inputCategory">Category</label>
+            <select class="form-control" name="inputCategory" id="inputCategory">
+                <option>0</option>
+                <option>1</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Password">
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btnSignIn">Submit</button>
+    </form>
+</div>
+<!-- <script>
+    $(function() {
+        $('#btnSignIn').click(function() {
+
+            $.ajax({
+                url: '/signIn',
+                data: $('form').serialize(),
+                type: 'POST',
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script> -->
+{% endblock %}

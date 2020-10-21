@@ -1,0 +1,54 @@
+{% extends 'dashboard/base.html' %} {% block title %} Mail {% endblock %} {% block content %}
+<h3>Mail</h3>
+<button type="button" class="btn btn-success">Add</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Content</th>
+            <th scope="col">Id Advertisement</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in value %}
+        <tr>
+            <th scope="row">{{row[0]}}</th>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td><button href="#" class="btn btn-primary" value={{row[0]}}>Update</button></td>
+            <td><button href="#" class="btn btn-danger" value={{row[0]}}>Remove</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    $(".btn-danger").click(function() {
+        if (confirm("Are you sure you want to remove this mail?")) {
+
+            $.ajax({
+                url: "/admin/removeMail",
+                type: "POST",
+                data: JSON.stringify({
+                    id: $(this).val()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function() {
+                    alert("Mail successfully remove.")
+                    document.location.href = "/admin/dashMail"
+                }
+            })
+        }
+
+
+    })
+    $(".btn-primary").click(function() {
+        document.location.href = "/admin/getMailUpdate" + $(this).val()
+    })
+    $(".btn-success").click(function() {
+        document.location.href = "/admin/addMail"
+    })
+</script>
+{% endblock %}

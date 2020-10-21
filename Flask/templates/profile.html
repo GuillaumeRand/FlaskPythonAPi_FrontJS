@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block title %} Index {% endblock %} {% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 is-offset-4">
+            <h3 class="title">Hello: {{value[2]}} {{value[1]}}</h3>
+        </div>
+        <div class="col-sm-6">
+            <p class="card-text">Age: {{value[3]}}</p>
+            <p class="card-text">Email: {{value[4]}}</p>
+            <p class="card-text">Category:{% if value[6]==1 %} RH {% else %} JobSeeker {% endif %}</p>
+        </div>
+        <div class="col-sm-6">
+            {% if value[6]==1 %}
+            <h4>Your Job : </h4><button class="btn btn-success">Add a job</button> {% else %}
+            <h4>Your advertisements : </h4>
+            {% endif %} {% for ad in adv %}
+            <p>{{ad[1]}} : {{ad[2]}}</p>
+            {% if value[6]==1 %}<button class="btn btn-danger" value={{ad[0]}}>Remove a job</button> {% endif %} {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+    $(".btn-success").click(function() {
+        document.location.href = "/rhAddJob"
+    })
+
+    $(".btn-danger").click(function() {
+        if (confirm("Are you sure you want to remove this Job?")) {
+
+            $.ajax({
+                url: "/removeJob",
+                type: "POST",
+                data: JSON.stringify({
+                    id: $(this).val()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function() {
+                    alert("Job successfully remove.")
+                    document.location.href = "/getProfile"
+                }
+            })
+        }
+
+
+    })
+</script>
+{% endblock %}

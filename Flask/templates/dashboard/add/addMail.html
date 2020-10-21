@@ -1,0 +1,43 @@
+{% extends 'dashboard/base.html' %} {% block title %} Add Mail {% endblock %} {% block content %}
+<h3>Add Mail</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Content</th>
+            <th scope="col">Advertisement</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" id="content" name="content" required>
+            </td>
+            <td><select id="adv" name="adv">
+                {% for optionAdv in adv %}
+                    <option value="{{optionAdv[0]}}">{{optionAdv[1]}}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td><button href="#" class="btn btn-primary" onclick="addMail()">Validate</button></td>
+        </tr>
+    </tbody>
+</table>
+<script>
+    function addMail() {
+        $.ajax({
+            url: "/admin/addMail",
+            type: "POST",
+            data: JSON.stringify({
+                content: $("#content").val(),
+                adv: $("#adv").val()
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                document.location.href = "/admin/dashMail"
+            }
+        })
+
+    }
+</script>
+{% endblock %}

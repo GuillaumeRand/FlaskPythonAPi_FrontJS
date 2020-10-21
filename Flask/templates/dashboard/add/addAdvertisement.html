@@ -1,0 +1,47 @@
+{% extends 'dashboard/base.html' %} {% block title %} Add Advertisement {% endblock %} {% block content %}
+<h3>Add Advertisement</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Job</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><select id="user" name="user">
+                {% for optionU in user %}
+                    <option value="{{optionU[0]}}">{{optionU[1]}}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td><select id="job" name="job">
+                {% for optionJ in job %}
+                    <option value="{{optionJ[0]}}">{{optionJ[1]}}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td><button href="#" class="btn btn-primary" onclick="addAdvertisement()">Validate</button></td>
+        </tr>
+    </tbody>
+</table>
+<script>
+    function addAdvertisement() {
+        $.ajax({
+            url: "/admin/addAdvertisement",
+            type: "POST",
+            data: JSON.stringify({
+                user: $("#user").val(),
+                job: $("#job").val(),
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                document.location.href = "/admin/dashAdvertisement"
+            }
+        })
+
+    }
+</script>
+{% endblock %}

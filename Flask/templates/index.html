@@ -1,0 +1,198 @@
+{% extends 'base.html' %} {% block title %} Index {% endblock %} {% block content %}
+<h1 style="display: flex; justify-content:center;">Job advertisements</h1>
+{% if session %}
+<h3>Hello {{ session['email']}}</h3>
+{% endif %}
+<div class="container">
+    <div class="row">
+        {% for row in value %}
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{row[1]}}</h5>
+                    <p class="card-text">{{row[2]}}</p>
+                    <button class="btn btn-primary" value={{row[0]}}>Learn More</button>
+                    <div class="loadMore">
+                        <ul id="ul{{row[0]}}">
+                        </ul>
+                        <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalLoginForm" value="{{row[0]}}">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if not session %}
+        <form id="applyForm">
+            <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body mx-3">
+                            <div class="md-form mb-5">
+                                <i class="fas fa-envelope prefix grey-text"></i>
+                                <input type="text" name="name" id="name" class="form-control validate">
+                                <label data-error="wrong" data-success="right" for="name">Your Name</label>
+                            </div>
+
+                            <div class="md-form mb-4">
+                                <i class="fas fa-lock prefix grey-text"></i>
+                                <input type="text" name="lastname" id="lastname" class="form-control validate">
+                                <label data-error="wrong" data-success="right" for="lastname">Your lastname</label>
+                            </div>
+                            <div class="md-form mb-5">
+                                <i class="fas fa-envelope prefix grey-text"></i>
+                                <input type="number" name="age" id="age" class="form-control validate">
+                                <label data-error="wrong" data-success="right" for="age">Your Age</label>
+                            </div>
+
+                            <div class="md-form mb-4">
+                                <i class="fas fa-lock prefix grey-text"></i>
+                                <input type="email" name="email" id="email" class="form-control validate">
+                                <label data-error="wrong" data-success="right" for="email">Your email</label>
+                            </div>
+                            <div class="md-form mb-5">
+                                <i class="fas fa-envelope prefix grey-text"></i>
+                                <input type="password" name="password" id="password" class="form-control validate">
+                                <label data-error="wrong" data-success="right" for="password">Your password</label>
+                            </div>
+                            <div class="md-form mb-4">
+                                <i class="fas fa-lock prefix grey-text"></i>
+                                <textarea name="message" id="message" class="form-control validate"></textarea>
+                                <label data-error="wrong" data-success="right" for="message">Your message</label>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button class="btn btn-default" id="validate">Validate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% else%}
+        <form id="applyForm">
+            <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">Post your message</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body mx-3">
+                            <div class="md-form mb-4">
+                                <i class="fas fa-lock prefix grey-text"></i>
+                                <textarea name="message" id="message" class="form-control validate"></textarea>
+                                <label data-error="wrong" data-success="right" for="message">Your message</label>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button class="btn btn-default" id="validateRh">Validate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalMessageText">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+<script>
+    var memIdJob = 0;
+    $(".card-body > button").click(
+        function() {
+            var divs = document.getElementsByClassName("loadMore")
+            for (let i = 0; i < divs.length; i++) {
+                if ($(divs[i]).show()) {
+                    $(divs[i]).toggle()
+                }
+            }
+            $(this).next().toggle();
+
+            var mem = $(this).val()
+            $.get('/getInfoJob/', {
+                    param: $(this).val()
+                })
+                .done(function(data) {
+                    $('#ul' + mem).html("<li>Company : " + data[0][0] + "</li><li>Category : " + data[0][1] + "</li>")
+                });
+        }
+    );
+    $(".btn-danger").click(
+        function() {
+            memIdJob = $(this).val()
+        }
+    );
+    $("#validate").click(
+        function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "/validate",
+                type: "POST",
+                data: JSON.stringify({
+                    name: $("#name").val(),
+                    lastname: $("#lastname").val(),
+                    age: $("#age").val(),
+                    email: $("#email").val(),
+                    password: $("#password").val(),
+                    job: memIdJob,
+                    message: $("#message").val()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data) {
+                    $("#modalLoginForm").modal('toggle');
+                    $("#modalMessageText").html(data['message']);
+                    $("#exampleModalCenter").modal('toggle');
+                }
+            })
+        }
+    );
+    $("#validateRh").click(
+        function(e) {
+            e.preventDefault();
+            var idUser = "{{session['id']}}"
+            $.ajax({
+                url: "/validateLog",
+                type: "POST",
+                data: JSON.stringify({
+                    user: idUser,
+                    job: memIdJob,
+                    message: $("#message").val()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data) {
+                    $("#modalLoginForm").modal('toggle');
+                    $("#modalMessageText").html(data['message']);
+                    $("#exampleModalCenter").modal('toggle');
+                }
+            });
+        }
+    );
+</script>
+{% endblock %}

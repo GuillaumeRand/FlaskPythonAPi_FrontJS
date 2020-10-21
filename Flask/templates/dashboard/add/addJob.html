@@ -1,0 +1,63 @@
+{% extends 'dashboard/base.html' %} {% block title %} Add Job {% endblock %} {% block content %}
+<h3>Add Job</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Content</th>
+            <th scope="col">Company</th>
+            <th scope="col">Category</th>
+            <th scope="col">RH</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" id="title" name="title" required>
+            </td>
+            <td><input type="text" id="content" name="content" required>
+            </td>
+            <td><select id="company" name="company">
+                {% for optionComp in company %}
+                    <option value="{{optionComp[0]}}">{{optionComp[1]}}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td><select id="category" name="category">
+                {% for optionCateg in category %}
+                    <option value="{{optionCateg[0]}}">{{optionCateg[1]}}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td><select id="rh" name="rh">
+                {% for optionRh in rh %}
+                    <option value="{{optionRh[0]}}">{{optionRh[1]}}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td><button href="#" class="btn btn-primary" onclick="addJob()">Validate</button></td>
+        </tr>
+    </tbody>
+</table>
+<script>
+    function addJob() {
+        $.ajax({
+            url: "/admin/addJob",
+            type: "POST",
+            data: JSON.stringify({
+                title: $("#title").val(),
+                content: $("#content").val(),
+                company: $("#company").val(),
+                category: $("#category").val(),
+                rh: $("#rh").val()
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                document.location.href = "/admin"
+            }
+        })
+
+    }
+</script>
+{% endblock %}

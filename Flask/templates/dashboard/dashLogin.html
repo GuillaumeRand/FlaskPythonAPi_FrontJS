@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %} {% block title %} Login {% endblock %} {% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 style="display: flex; justify-content:center;" class="title">Login</h3>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul class=flashes></ul>
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+    <div class="container">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Login</span>
+            </div>
+            <input class="form-control rounded-right" type="login" id="login" name="login" placeholder="Your login">
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" type="password" id="password" name="password" placeholder="Your Password">
+        </div>
+        <button class="btn btn-primary" id="button">Login</button>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('#button').click(function() {
+
+            $.ajax({
+                url: '/admin/login/',
+                type: 'POST',
+                data: JSON.stringify({
+                    login: $("#login").val(),
+                    password: $("#password").val()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+                    if (response.redirect) {
+                        window.location.href = response.redirect;
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

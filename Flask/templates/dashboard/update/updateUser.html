@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %} {% block title %} Update User {% endblock %} {% block content %}
+<h3>Update User</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Age</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in value %}
+        <tr>
+            <th scope="row"> <span id="memId" value={{row[0]}}>{{row[0]}}</span></th>
+            <td><input type="text" id="name" name="name" required value={{row[1]}}>
+            </td>
+            <td><input type="text" id="lastname" name="name" required value={{row[2]}}></td>
+            <td><input type="number" id="age" name="age" min="1" max="100" value={{row[3]}}></td>
+            <td><input type="text" id="email" name="email" required value={{row[4]}}></td>
+            <td><input type="text" id="password" name="password" required value={{row[5]}}></td>
+            <td><button href="#" class="btn btn-primary" onclick="updateUser()">Validate</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    function updateUser() {
+        $.ajax({
+            url: "/admin/updateUser",
+            type: "POST",
+            data: JSON.stringify({
+                id: $("#memId").text(),
+                name: $("#name").val(),
+                lastname: $("#lastname").val(),
+                age: $("#age").val(),
+                email: $("#email").val(),
+                password: $("#password").val(),
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                document.location.href = "/admin/dashUser"
+            }
+        })
+
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/index.css'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js "></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js "
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN " crossorigin="anonymous ">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js "
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV " crossorigin="anonymous ">
+    </script>
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light"
+        style="background-color:#6C757D;box-shadow: 0px 2px 5px 0px rgba(1.6,1,1.2,1.2);">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class=" navbar-nav ">
+                <li class=" nav-item active ">
+                    <a class="badge badge-primary text-wrap mr-3" style="color: #FFFFFF" href="/ " nav-link>
+                        <svg width=" 1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill"
+                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z" />
+                            <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                        </svg>
+                        Jobs
+                    </a>
+                </li>
+            </ul>
+            {% if session %}
+            <div class="navbar-collapse collapse justify-content-between">
+                <ul class=" navbar-nav ">
+                    <li class="nav-item active ">
+                        <a class="badge badge-primary text-wrap" style="color: #FFFFFF" href="/getProfile " nav-link>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-lines-fill"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7 1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm2 9a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+                            </svg>
+                            Profile
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item active ">
+                        <a class="badge badge-primary text-wrap" style="color: #FFFFFF" href="/logout " nav-link>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-left"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                                <path fill-rule="evenodd"
+                                    d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                            </svg>
+                            Deconnexion</a>
+                    </li>
+                </ul>
+            </div>
+            {% else %}
+            <div class="navbar-collapse collapse justify-content-between">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="badge badge-primary text-wrap " style="color: #FFFFFF" href="/showSignIn " nav-link>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                            </svg>
+                            Inscription
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="badge badge-primary text-wrap" style="color: #FFFFFF" href="/login/ " nav-link>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-right"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                                <path fill-rule="evenodd"
+                                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                            </svg>
+                            Connexion
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+    <!--- Footer --->
+    <footer>
+        <div class="jumbotron jumbotron-fluid bg-secondary p-4 mt-5 mb-0 ">
+            <div class="container ">
+                <div class="row ">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 cizgi ">
+                        <div class="card bg-secondary border-0 ">
+                            <div class="card-body text-light text-center ">
+                                <h5 class="card-title text-white display-4 " style="font-size:30px ">JobCheck</h5>
+                                <p class="d-inline lead ">Killian Castrec - Guillaume Rand © 2020<br>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 cizgi ">
+                        <div class="card bg-secondary border-0 ">
+                            <div class="card-body text-center ">
+                                <h5 class="card-title text-white display-4 " style="font-size:30px ">JobCheck entreprise
+                                </h5>
+                                <a class="text-light d-block lead " style="margin-left: -20px " href="# "><i
+                                        class="fa fa-phone mr-2 "></i>+90 (000) 000 0 000</a>
+                                <a class="text-light d-block lead " href="# "><i
+                                        class="fa fa-envelope mr-2 "></i>admin@admin.com</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 ">
+                        <div class="card bg-secondary border-0 ">
+                            <div class="card-body text-center ">
+                                <h5 class="card-title text-white display-4 " style="font-size:30px ">Social media</h5>
+
+                                <a class="text-light " href="# "><i class="fa fa-facebook-square fa-fw fa-2x "></i></a>
+
+                                <a class="text-light " href="# "><i class="fa fa-twitter-square fa-fw fa-2x "></i></a>
+
+                                <a class="text-light " href="# "><i class="fa fa-instagram fa-fw fa-2x "></i></a>
+
+                                <a class="text-light " href="# "><i class="fa fa-linkedin fa-fw fa-2x "></i></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--# Footer #-->
+
+</html>

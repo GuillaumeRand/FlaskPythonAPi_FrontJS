@@ -1,0 +1,42 @@
+{% extends 'dashboard/base.html' %} {% block title %} Update Mail {% endblock %} {% block content %}
+<h3>Update Mail</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Content</th>
+            <th scope="col">Id Advertisement</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in value %}
+        <tr>
+            <th scope="row"> <span id="memId" value={{row[0]}}>{{row[0]}}</span></th>
+            <td><input type="text" id="content" name="content" required value="{{row[1]}}">
+            </td>
+            <td scope="row"> <span id="id_adv" value={{row[2]}}>{{row[2]}}</span></td>
+            <td><button href="#" class="btn btn-primary" onclick="updateMail()">Validate</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    function updateMail() {
+        $.ajax({
+            url: "/admin/updateMail",
+            type: "POST",
+            data: JSON.stringify({
+                id: $("#memId").text(),
+                content: $("#content").val()
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                document.location.href = "/admin/dashMail"
+            }
+        })
+
+    }
+</script>
+{% endblock %}
